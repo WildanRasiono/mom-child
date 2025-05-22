@@ -33,111 +33,108 @@ $result = mysqli_query($connection, "SELECT*FROM lokasi_presensi ORDER BY id DES
 </head>
 
 <body>
-    <!-- SIDEBAR -->
-    <section id="sidebar"> <a href="#" class="brand">
-        </a>
-        <ul class="side-menu top">
-            <li>
-                <a href="../home/home.php">
-                    <i class='bx bx-home-alt'></i>
-                    <span class="text">Home</span>
-                </a>
-            </li>
-            <li>
-                <a href="../data_pegawai/pegawai.php">
-                    <i class='bx bx-clipboard'></i>
-                    <span class="text">Data Pegawai</span>
-                </a>
-            </li>
-            <li class="has-submenu">
-                <a href="#">
-                    <i class='bx bxs-doughnut-chart'></i>
-                    <span class="text"> Data Admin</span>
-
-                </a>
-                <ul class="sub-menu">
-                    <li><a href="../data_jabatan/jabatan.php">Jabatan</a></li>
-                    <li><a href="lokasi_presensi.php"> Lokasi Absensi</a></li>
-
-                </ul>
-            </li>
-            <ul class="side-menu">
-
+    <!-- CONTENT -->
+	<section id="content">
+        <!-- SIDEBAR -->
+        <section id="sidebar"> 
+            <a href="#" class="brand">
+                <img src="../../assets/momchild.png" alt="Mom & Child Logo" class="brand-img">
+            </a>
+            <ul class="side-menu top">
                 <li>
-                    <a href="../../login/logout.php" class="logout">
-                        <i class='bx bxs-log-out-circle'></i>
-                        <span class="text">logout</span>
+                    <a href="../home/home.php">
+                        <i class='bx bx-home-alt'></i>
+                        <span class="text">Home</span>
                     </a>
                 </li>
-            </ul>
-    </section>
+                <li>
+                    <a href="../data_pegawai/pegawai.php">
+                        <i class='bx bx-clipboard'></i>
+                        <span class="text">Data Pegawai</span>
+                    </a>
+                </li>
+                <li class="has-submenu">
+                    <a href="#">
+                        <i class='bx bxs-doughnut-chart'></i>
+                        <span class="text"> Data Admin</span>
 
-    <!-- SIDEBAR -->
-    <?php include("../layout/navbar.php"); ?>
-    <!-- MAIN -->
-    <main>
-        <div class="head-title">
-            <div class="left">
-                <h1> Lokasi Absensi</h1>
-            </div>
-        </div>
-        <a href="tambah.php" class="btn-edit"><span class="text"><i class='bx bxs-user-plus'></i>Tambah data </span></a>
-        <div class="table-data">
-            <div class="order">
-                <div class="head">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>No </th>
-                                <th>Nama Lokasi</th>
-                                <th>Alamat Lokasi</th>
-                                <th>Latutide/Langitude</th>
-                                <th>Radius</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (mysqli_num_rows($result) === 0) : ?>
-                                <tr>
-                                    <td colspan="6">
-                                        Maaf data masih kosong
-                                    </td>
-                                </tr>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="../data_jabatan/jabatan.php">Jabatan</a></li>
+                        <li><a href="lokasi_presensi.php"> Lokasi Absensi</a></li>
 
-                            <?php else: ?>
-                                <?php $no = 1;
-                                while ($lokasi = mysqli_fetch_array($result)) : ?>
-                                    <tr>
-                                        <td class="text-center"><?= $no++ ?></td>
-                                        <td><?= $lokasi['nama_lokasi'] ?></td>
-                                        <td><?= $lokasi['alamat_lokasi'] ?></td>
-                                        <td><?= $lokasi['latitude'] . '/' . $lokasi['longitude'] ?></td>
-                                        <td><?= $lokasi['radius'] ?></td>
-                                        <td class="text-center">
-                                            <a href="detail.php?id=<?= $lokasi['id'] ?>" class="btn-edit">Detail</a>
-                                            <a href="edit.php?id=<?= $lokasi['id'] ?>" class="btn-edit">Edit</a>
-                                            <a href="hapus.php?id=<?= $lokasi['id'] ?>" class="btn-delete">Hapus</a>
-                                        </td>
+                    </ul>
+                </li>
+                <ul class="side-menu">
 
-                                    </tr>
-                                <?php endwhile; ?>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-
+                    <li>
+                        <a href="../../login/logout.php" class="logout">
+                            <i class='bx bxs-log-out-circle'></i>
+                            <span class="text">logout</span>
+                        </a>
+                    </li>
+                </ul>
+        </section>
+        <!-- MAIN -->
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <h1> Lokasi Absensi</h1>
                 </div>
             </div>
-        </div>
+            <a href="tambah.php" class="btn-edit"><span class="text"><i class='bx bxs-user-plus'></i>Tambah data </span></a>
+            <div class="table-data">
+                <div class="order">
+                    <div class="head">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>No </th>
+                                    <th>Nama Lokasi</th>
+                                    <th>Alamat Lokasi</th>
+                                    <th>Latutide/Langitude</th>
+                                    <th>Radius</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if (mysqli_num_rows($result) === 0) : ?>
+                                    <tr>
+                                        <td colspan="6">
+                                            Maaf data masih kosong
+                                        </td>
+                                    </tr>
+
+                                <?php else: ?>
+                                    <?php $no = 1;
+                                    while ($lokasi = mysqli_fetch_array($result)) : ?>
+                                        <tr>
+                                            <td class="text-center"><?= $no++ ?></td>
+                                            <td><?= $lokasi['nama_lokasi'] ?></td>
+                                            <td><?= $lokasi['alamat_lokasi'] ?></td>
+                                            <td><?= $lokasi['latitude'] . '/' . $lokasi['longitude'] ?></td>
+                                            <td><?= $lokasi['radius'] ?></td>
+                                            <td class="text-center">
+                                                <a href="detail.php?id=<?= $lokasi['id'] ?>" class="btn-edit">Detail</a>
+                                                <a href="edit.php?id=<?= $lokasi['id'] ?>" class="btn-edit">Edit</a>
+                                                <a href="hapus.php?id=<?= $lokasi['id'] ?>" class="btn-delete">Hapus</a>
+                                            </td>
+
+                                        </tr>
+                                    <?php endwhile; ?>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
 
 
-    </main>
-
-    <!-- MAIN -->
-
+        </main>
+        <!-- MAIN -->
     </section>
     <!-- CONTENT -->
-
-
     <script src="../../assets/java/script.js"></script>
     <?php include("../../assets/swetalert/swetalert.php"); ?>
 </body>
