@@ -10,13 +10,10 @@ if (!isset($_SESSION['login'])) {
     header("Location: ../../login/login.php?pesan=akses_ditolak");
     exit;
 }
-
 require_once("../../config.php");
-
 // Proses update data
 if (isset($_POST['update'])) {
     $id = isset($_POST['id']) ? $_POST['id'] : '';
-
     $nama_lokasi = isset($_POST['nama_lokasi']) ? $_POST['nama_lokasi'] : '';
     $alamat_lokasi = isset($_POST['alamat_lokasi']) ? $_POST['alamat_lokasi'] : '';
     $tipe_lokasi = isset($_POST['tipe_lokasi']) ? $_POST['tipe_lokasi'] : '';
@@ -74,156 +71,129 @@ if (mysqli_num_rows($result) > 0) {
     exit;
 }
 ?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-
-
     <!-- My CSS -->
-    <link rel="stylesheet" href="../../assets/css/style.css">
-
+    <link rel="stylesheet" href="../../assets/css/style.css?v=<?= filemtime('../../assets/css/style.css'); ?>">
     <title>Absensi</title>
 </head>
 
 <body>
-
-
-    <!-- SIDEBAR -->
-    <section id="sidebar"> <a href="#" class="brand">
-
-
-
-
-        </a>
-        <ul class="side-menu top">
-            <li>
-                <a href="../home/home.php">
-                    <i class='bx bx-home-alt'></i>
-                    <span class="text">Home</span>
-                </a>
-            </li>
-            <li>
-                <a href="../data_pegawai/pegawai.php">
-                    <i class='bx bx-clipboard'></i>
-                    <span class="text">Data Pegawai</span>
-                </a>
-            </li>
-            <li class="has-submenu">
-                <a href="#">
-                    <i class='bx bxs-doughnut-chart'></i>
-                    <span class="text"> Data Admin</span>
-
-                </a>
-                <ul class="sub-menu">
-                    <li><a href="../data_jabatan/jabatan.php">Jabatan</a></li>
-                    <li><a href="lokasi_presensi.php"> Lokasi Absensi</a></li>
-
-                </ul>
-            </li>
-
-
-            <ul class="side-menu">
-
+    <!-- CONTENT -->
+	<section id="content">
+        <!-- SIDEBAR -->
+        <section id="sidebar"> 
+            <a href="#" class="brand">
+                <img src="../../assets/momchild.png" alt="Mom & Child Logo" class="brand-img">
+            </a>
+            <ul class="side-menu top">
                 <li>
-                    <a href="../../login/logout.php" class="logout">
-                        <i class='bx bxs-log-out-circle'></i>
-                        <span class="text">logout</span>
+                    <a href="../home/home.php">
+                        <i class='bx bx-home-alt'></i>
+                        <span class="text">Home</span>
                     </a>
                 </li>
-            </ul>
-    </section>
-
-    <!-- SIDEBAR -->
-    <?php include("../layout/navbar.php"); ?>
-
-
-
-    <!-- MAIN -->
-    <main>
-        <div class="head-title">
-            <div class="left">
-                <h1>Edit Lokasi Absensi</h1>
-            </div>
-        </div>
-
-        <div class="tesinput">
-            <!-- Tampilkan pesan validasi jika ada -->
-            <?php if (isset($_SESSION['validasi'])): ?>
-                <div style="color: red;"><?= $_SESSION['validasi']; ?></div>
-                <?php unset($_SESSION['validasi']); ?>
-            <?php endif; ?>
-
-            <form action="edit.php" method="POST">
-                <div class="form-container">
-                    <label for="nama_lokasi">Nama Lokasi</label>
-                    <input type="text" id="nama_lokasi" name="nama_lokasi"
-                        value="<?= htmlspecialchars($data['nama_lokasi']); ?>">
-
-                    <label for="alamat_lokasi">Alamat Lokasi</label>
-                    <input type="text" id="alamat_lokasi" name="alamat_lokasi"
-                        value="<?= htmlspecialchars($data['alamat_lokasi']); ?>">
-
-                    <label for="tipe_lokasi">Tipe Lokasi</label>
-                    <select name="tipe_lokasi" id="tipe_lokasi">
-                        <option value="pusat" <?= $data['tipe_lokasi'] == 'pusat' ? 'selected' : ''; ?>>Pusat</option>
-                        <option value="cabang" <?= $data['tipe_lokasi'] == 'cabang' ? 'selected' : ''; ?>>Cabang</option>
-                    </select>
-
-                    <label for="latitude">Latitude</label>
-                    <input type="text" id="latitude" name="latitude"
-                        value="<?= htmlspecialchars($data['latitude']); ?>">
-
-                    <label for="longitude">Longitude</label>
-                    <input type="text" id="longitude" name="longitude"
-                        value="<?= htmlspecialchars($data['longitude']); ?>">
-
-                    <label for="radius">Radius</label>
-                    <input type="number" id="radius" name="radius"
-                        value="<?= htmlspecialchars($data['radius']); ?>">
-
-                    <label for="zona_waktu">Zona Waktu</label>
-                    <select name="zona_waktu" id="zona_waktu">
-                        <option value="WIB" <?= $data['zona_waktu'] == 'WIB' ? 'selected' : ''; ?>>WIB</option>
-                        <option value="WITA" <?= $data['zona_waktu'] == 'WITA' ? 'selected' : ''; ?>>WITA</option>
-                        <option value="WIT" <?= $data['zona_waktu'] == 'WIT' ? 'selected' : ''; ?>>WIT</option>
-                    </select>
-
-                    <label for="jam_masuk">Jam Masuk</label>
-                    <input type="time" id="jam_masuk" name="jam_masuk"
-                        value="<?= htmlspecialchars($data['jam_masuk']); ?>">
-
-                    <label for="jam_pulang">Jam Pulang</label>
-                    <input type="time" id="jam_pulang" name="jam_pulang"
-                        value="<?= htmlspecialchars($data['jam_pulang']); ?>">
-
-                    <div class="button-container">
-                        <button type="submit" name="update">Update</button>
-                        <a href="lokasi_presensi.php" class="button">Back</a>
-                    </div>
+                <li>
+                    <a href="../data_pegawai/pegawai.php">
+                        <i class='bx bx-clipboard'></i>
+                        <span class="text">Data Pegawai</span>
+                    </a>
+                </li>
+                <li class="has-submenu">
+                    <a href="#">
+                        <i class='bx bxs-doughnut-chart'></i>
+                        <span class="text"> Data Admin</span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="../data_jabatan/jabatan.php">Jabatan</a></li>
+                        <li><a href="lokasi_presensi.php"> Lokasi Absensi</a></li>
+                    </ul>
+                </li>
+                <ul class="side-menu">
+                    <li>
+                        <a href="../../login/logout.php" class="logout">
+                            <i class='bx bxs-log-out-circle'></i>
+                            <span class="text">logout</span>
+                        </a>
+                    </li>
+                </ul>
+        </section>
+        <!-- SIDEBAR -->
+        <!-- MAIN -->
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <h1>Edit Lokasi Absensi</h1>
                 </div>
-                <input type="hidden" name="id" value="<?= $data['id']; ?>">
-            </form>
-        </div>
+            </div>
+            <div class="tesinput">
+                <!-- Tampilkan pesan validasi jika ada -->
+                <?php if (isset($_SESSION['validasi'])): ?>
+                    <div style="color: red;"><?= $_SESSION['validasi']; ?></div>
+                    <?php unset($_SESSION['validasi']); ?>
+                <?php endif; ?>
 
-    </main>
+                <form action="edit.php" method="POST">
+                    <div class="form-container">
+                        <label for="nama_lokasi">Nama Lokasi</label>
+                        <input type="text" id="nama_lokasi" name="nama_lokasi"
+                            value="<?= htmlspecialchars($data['nama_lokasi']); ?>">
 
-    <!-- MAIN -->
+                        <label for="alamat_lokasi">Alamat Lokasi</label>
+                        <input type="text" id="alamat_lokasi" name="alamat_lokasi"
+                            value="<?= htmlspecialchars($data['alamat_lokasi']); ?>">
 
+                        <label for="tipe_lokasi">Tipe Lokasi</label>
+                        <select name="tipe_lokasi" id="tipe_lokasi">
+                            <option value="pusat" <?= $data['tipe_lokasi'] == 'pusat' ? 'selected' : ''; ?>>Pusat</option>
+                            <option value="cabang" <?= $data['tipe_lokasi'] == 'cabang' ? 'selected' : ''; ?>>Cabang</option>
+                        </select>
+
+                        <label for="latitude">Latitude</label>
+                        <input type="text" id="latitude" name="latitude"
+                            value="<?= htmlspecialchars($data['latitude']); ?>">
+
+                        <label for="longitude">Longitude</label>
+                        <input type="text" id="longitude" name="longitude"
+                            value="<?= htmlspecialchars($data['longitude']); ?>">
+
+                        <label for="radius">Radius</label>
+                        <input type="number" id="radius" name="radius"
+                            value="<?= htmlspecialchars($data['radius']); ?>">
+
+                        <label for="zona_waktu">Zona Waktu</label>
+                        <select name="zona_waktu" id="zona_waktu">
+                            <option value="WIB" <?= $data['zona_waktu'] == 'WIB' ? 'selected' : ''; ?>>WIB</option>
+                            <option value="WITA" <?= $data['zona_waktu'] == 'WITA' ? 'selected' : ''; ?>>WITA</option>
+                            <option value="WIT" <?= $data['zona_waktu'] == 'WIT' ? 'selected' : ''; ?>>WIT</option>
+                        </select>
+
+                        <label for="jam_masuk">Jam Masuk</label>
+                        <input type="time" id="jam_masuk" name="jam_masuk"
+                            value="<?= htmlspecialchars($data['jam_masuk']); ?>">
+
+                        <label for="jam_pulang">Jam Pulang</label>
+                        <input type="time" id="jam_pulang" name="jam_pulang"
+                            value="<?= htmlspecialchars($data['jam_pulang']); ?>">
+
+                        <div class="button-container">
+                            <button type="submit" name="update">Update</button>
+                            <a href="lokasi_presensi.php" class="button">Back</a>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id" value="<?= $data['id']; ?>">
+                </form>
+            </div>
+        </main>
+        <!-- MAIN -->
     </section>
     <!-- CONTENT -->
-
-
-    <script src="../../assets/java/script.js"></script>
+    <script src="<?= base_url('../../assets/java/script.js?v=' . filemtime(FCPATH . '../../assets/java/script.js')); ?>"></script>
     <?php include("../../assets/swetalert/swetalert.php"); ?>
 </body>
 

@@ -26,118 +26,87 @@ if (isset($_POST['submit'])) {
 		exit;
 	}
 }
-
-
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-
-
 	<!-- My CSS -->
-	<link rel="stylesheet" href="../../assets/css/style.css">
-
+	<link rel="stylesheet" href="../../assets/css/style.css?v=<?= filemtime('../../assets/css/style.css'); ?>">
 	<title>Absensi</title>
 </head>
 
 <body>
-
-
-	<!-- SIDEBAR -->
-	<section id="sidebar"> <a href="#" class="brand">
-
-
-
-
-		</a>
-		<ul class="side-menu top">
-			<li>
-				<a href="../home/home.php">
-					<i class='bx bx-home-alt'></i>
-					<span class="text">Home</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<i class='bx bx-clipboard'></i>
-					<span class="text">Data Pegawai</span>
-				</a>
-			</li>
-			<li class="has-submenu">
-				<a href="../data_pegawai/pegawai.php">
-					<i class='bx bxs-doughnut-chart'></i>
-					<span class="text"> Data Admin</span>
-
-				</a>
-				<ul class="sub-menu">
-					<li><a href="jabatan.php">Jabatan</a></li>
-					<li><a href="../data_lokasi_presensi/lokasi_presensi.php"> Lokasi Absensi</a></li>
-
-				</ul>
-			</li>
-
-
-			<ul class="side-menu">
-
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- SIDEBAR -->
+		<section id="sidebar"> 
+			<a href="#" class="brand">
+				<img src="../../assets/momchild.png" alt="Mom & Child Logo" class="brand-img">
+			</a>
+			<ul class="side-menu top">
 				<li>
-					<a href="../../login/logout.php" class="logout">
-						<i class='bx bxs-log-out-circle'></i>
-						<span class="text">logout</span>
+					<a href="../home/home.php">
+						<i class='bx bx-home-alt'></i>
+						<span class="text">Home</span>
 					</a>
 				</li>
-			</ul>
-	</section>
+				<li>
+					<a href="#">
+						<i class='bx bx-clipboard'></i>
+						<span class="text">Data Pegawai</span>
+					</a>
+				</li>
+				<li class="has-submenu">
+					<a href="../data_pegawai/pegawai.php">
+						<i class='bx bxs-doughnut-chart'></i>
+						<span class="text"> Data Admin</span>
 
-	<!-- SIDEBAR -->
-	<?php include("../layout/navbar.php"); ?>
+					</a>
+					<ul class="sub-menu">
+						<li><a href="jabatan.php">Jabatan</a></li>
+						<li><a href="../data_lokasi_presensi/lokasi_presensi.php"> Lokasi Absensi</a></li>
 
+					</ul>
+				</li>
+				<ul class="side-menu">
 
-
-	<!-- MAIN -->
-	<main>
-		<div class="head-title">
-			<div class="left">
-				<h1>Tambah Data Jabatan</h1>
-
-
-
-			</div>
-		</div>
-		<div class="tesinput">
-			<form action="tambah.php" method="POST">
-
-				<div class="form-container">
-					<label for="">Nama Jabatan</label>
-					<input type="text" id="jabatan" name="jabatan" placeholder="Masukkan nama jabatan">
-					<div class="button-container">
-						<button type="submit" name="submit">Simpan</button>
-						<a href="jabatan.php" class="button">Back</a>
-					</div>
+					<li>
+						<a href="../../login/logout.php" class="logout">
+							<i class='bx bxs-log-out-circle'></i>
+							<span class="text">logout</span>
+						</a>
+					</li>
+				</ul>
+		</section>
+		<!-- MAIN -->
+		<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>Tambah Data Jabatan</h1>
 				</div>
+			</div>
+			<div class="tesinput">
+				<form action="tambah.php" method="POST">
 
-
-			</form>
-		</div>
-
-
-	</main>
-
-	<!-- MAIN -->
-
+					<div class="form-container">
+						<label for="">Nama Jabatan</label>
+						<input type="text" id="jabatan" name="jabatan" placeholder="Masukkan nama jabatan">
+						<div class="button-container">
+							<button type="submit" name="submit">Simpan</button>
+							<a href="jabatan.php" class="button">Back</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</main>
+		<!-- MAIN -->
 	</section>
 	<!-- CONTENT -->
-
-
-	<script src="../../assets/java/script.js"></script>
+	<script src="<?= base_url('../../assets/java/script.js?v=' . filemtime(FCPATH . '../../assets/java/script.js')); ?>"></script>
 	<?php include("../../assets/swetalert/swetalert.php"); ?>
 </body>
 

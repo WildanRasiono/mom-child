@@ -20,15 +20,11 @@ $result = mysqli_query($connection, "SELECT*FROM lokasi_presensi ORDER BY id DES
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
-
     <!-- My CSS -->
-    <link rel="stylesheet" href="../../assets/css/style.css">
-
+    <link rel="stylesheet" href="../../assets/css/style.css?v=<?= filemtime('../../assets/css/style.css'); ?>">
     <title>Absensi</title>
 </head>
 
@@ -135,7 +131,7 @@ $result = mysqli_query($connection, "SELECT*FROM lokasi_presensi ORDER BY id DES
         <!-- MAIN -->
     </section>
     <!-- CONTENT -->
-    <script src="../../assets/java/script.js"></script>
+    <script src="<?= base_url('../../assets/java/script.js?v=' . filemtime(FCPATH . '../../assets/java/script.js')); ?>"></script>
     <?php include("../../assets/swetalert/swetalert.php"); ?>
 </body>
 

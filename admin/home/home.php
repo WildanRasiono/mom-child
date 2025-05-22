@@ -68,7 +68,6 @@ $nama = mysqli_query($connection, "SELECT * FROM pegawai ORDER BY nama desc");
 </head>
 
 <body>
-
 	<!-- CONTENT -->
 	<section id="content">
 		<!-- SIDEBAR -->
@@ -109,7 +108,6 @@ $nama = mysqli_query($connection, "SELECT * FROM pegawai ORDER BY nama desc");
 				</li>
 			</ul>
 		</section>
-
 		<!-- SIDEBAR -->
 		<!-- MAIN -->
 		<main>
@@ -214,7 +212,7 @@ $nama = mysqli_query($connection, "SELECT * FROM pegawai ORDER BY nama desc");
 		<!-- MAIN -->
 	</section>
 	<!-- CONTENT -->
-	<script src="../../assets/java/script.js"></script>
+	<script src="<?= base_url('../../assets/java/script.js?v=' . filemtime(FCPATH . '../../assets/java/script.js')); ?>"></script>
 </body>
 
 </html>

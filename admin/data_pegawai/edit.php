@@ -86,147 +86,145 @@ if (mysqli_num_rows($result) > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css?v=<?= filemtime('../../assets/css/style.css'); ?>">
     <title>Absensi</title>
 </head>
 
 <body>
-
-    <!-- SIDEBAR -->
-    <section id="sidebar"> <a href="#" class="brand">
-
-
-
-
-        </a>
-        <ul class="side-menu top">
-            <li>
-                <a href="../home/home.php">
-                    <i class='bx bx-home-alt'></i>
-                    <span class="text">Home</span>
-                </a>
-            </li>
-            <li class="active">
-                <a href="../data_pegawai/pegawai.php">
-                    <i class='bx bx-clipboard'></i>
-                    <span class="text">Data Pegawai</span>
-                </a>
-            </li>
-            <li class="has-submenu">
-                <a href="#">
-                    <i class='bx bxs-doughnut-chart'></i>
-                    <span class="text"> Data Admin</span>
-                </a>
-                <ul class="sub-menu">
-                    <li><a href="../data_jabatan/jabatan.php">Jabatan</a></li>
-                    <li><a href="../data_lokasi_presensi/lokasi_presensi.php"> Lokasi Absensi</a></li>
-                </ul>
-            </li>
-
-            <ul class="side-menu">
-
+    <!-- CONTENT -->
+	<section id="content">
+        <!-- SIDEBAR -->
+        <section id="sidebar"> 
+            <a href="#" class="brand">
+                <img src="../../assets/momchild.png" alt="Mom & Child Logo" class="brand-img">
+            </a>
+            <ul class="side-menu top">
                 <li>
-                    <a href="../../login/logout.php" class="logout">
-                        <i class='bx bxs-log-out-circle'></i>
-                        <span class="text">logout</span>
+                    <a href="../home/home.php">
+                        <i class='bx bx-home-alt'></i>
+                        <span class="text">Home</span>
                     </a>
                 </li>
-            </ul>
-    </section>
-    <?php include("../layout/navbar.php"); ?>
+                <li class="active">
+                    <a href="../data_pegawai/pegawai.php">
+                        <i class='bx bx-clipboard'></i>
+                        <span class="text">Data Pegawai</span>
+                    </a>
+                </li>
+                <li class="has-submenu">
+                    <a href="#">
+                        <i class='bx bxs-doughnut-chart'></i>
+                        <span class="text"> Data Admin</span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="../data_jabatan/jabatan.php">Jabatan</a></li>
+                        <li><a href="../data_lokasi_presensi/lokasi_presensi.php"> Lokasi Absensi</a></li>
+                    </ul>
+                </li>
 
-    <!-- MAIN -->
-    <main>
-        <div class="head-title">
-            <div class="left">
-                <h1>Edit Data Pegawai</h1>
-            </div>
-        </div>
+                <ul class="side-menu">
 
-        <div class="tesinput">
-            <!-- Tampilkan pesan validasi jika ada -->
-
-            <form action="edit.php" method="POST">
-                <div class="form-container">
-                    <label for="nip">NIP</label>
-                    <input type="text" id="nip" name="nip" value="<?= htmlspecialchars($data['nip']); ?>">
-
-                    <label for="nama">Nama</label>
-                    <input type="text" id="nama" name="nama" value="<?= htmlspecialchars($data['nama']); ?>">
-
-                    <label for="alamat">Alamat</label>
-                    <input type="text" id="alamat" name="alamat" value="<?= htmlspecialchars($data['alamat']); ?>">
-
-                    <label for="jenis_kelamin">Jenis Kelamin</label>
-                    <select name="jenis_kelamin" id="jenis_kelamin">
-                        <option value="">--Pilih Jenis Kelamin--</option>
-                        <option value="laki-laki" <?php echo isset($data['jenis_kelamin']) && $data['jenis_kelamin'] == "laki-laki" ? 'selected' : ''; ?>>Laki-Laki</option>
-                        <option value="perempuan" <?php echo isset($data['jenis_kelamin']) && $data['jenis_kelamin'] == "perempuan" ? 'selected' : ''; ?>>Perempuan</option>
-                    </select>
-
-                    <label for="no_hp">No hp</label>
-                    <input type="text" id="no_hp" name="no_hp" value="<?= htmlspecialchars($data['no_hp']); ?>">
-
-                    <label for="lokasi_presensi"> Lokasi Absensi</label>
-                    <select name="lokasi_presensi" id="lokasi_presensi">
-                        <option value="">--Pilih Lokasi Absensi--</option>
-                        <?php
-
-                        $ambil_nama_lokasi = mysqli_query($connection, "SELECT * FROM lokasi_presensi ORDER BY nama_lokasi ASC");
-
-
-                        $lokasi_terpilih = isset($lokasi_terpilih) ? $lokasi_terpilih : '';
-
-
-                        while ($nama_lokasi = mysqli_fetch_assoc($ambil_nama_lokasi)) {
-                            $nama_nama_lokasi = $nama_lokasi['nama_lokasi'];
-
-
-                            if ($lokasi_terpilih == $nama_nama_lokasi) {
-                                echo '<option value="' . $nama_nama_lokasi . '" selected="selected">' . $nama_nama_lokasi . '</option>';
-                            } else {
-                                echo '<option value="' . $nama_nama_lokasi . '">' . $nama_nama_lokasi . '</option>';
-                            }
-                        }
-                        ?>
-                    </select>
-
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" value="<?= htmlspecialchars($data['username']); ?>">
-
-                    <label for="password">Password</label>
-                    <input type="text" id="password" name="password" value="<?= $data['password'] ?>">
-
-                    <label for="jabatan">Jabatan</label>
-                    <input type="text" id="jabatan" name="jabatan" value="<?= htmlspecialchars($data['jabatan']); ?>">
-
-                    <label for="role">Role</label>
-                    <select name="role" id="role">
-                        <option value="admin" <?= $data['role'] == 'admin' ? 'selected' : ''; ?>>Admin</option>
-                        <option value="pegawai" <?= $data['role'] == 'pegawai' ? 'selected' : ''; ?>>Pegawai</option>
-                    </select>
-
-                    <label for="status">Status</label>
-                    <select name="status" id="status">
-                        <option value="Aktif" <?= $data['status'] == 'Aktif' ? 'selected' : ''; ?>>Aktif</option>
-                        <option value="nonaktif" <?= $data['status'] == 'nonaktif' ? 'selected' : ''; ?>>Nonaktif</option>
-                    </select>
-
-                    <label for="foto">foto</label>
-                    <input type="file" id="foto" name="foto" value="<?= htmlspecialchars($data['foto']); ?>">
-
-                    <div class="button-container">
-                        <button type="submit" name="update">Update</button>
-                        <a href="pegawai.php" class="button">Back</a>
-                    </div>
+                    <li>
+                        <a href="../../login/logout.php" class="logout">
+                            <i class='bx bxs-log-out-circle'></i>
+                            <span class="text">logout</span>
+                        </a>
+                    </li>
+                </ul>
+        </section>
+        <!-- MAIN -->
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <h1>Edit Data Pegawai</h1>
                 </div>
-                <input type="hidden" name="id" value="<?= $data['id_pegawai']; ?>">
-            </form>
-        </div>
+            </div>
 
-    </main>
+            <div class="tesinput">
+                <!-- Tampilkan pesan validasi jika ada -->
 
-    <script src="../../assets/java/script.js"></script>
+                <form action="edit.php" method="POST">
+                    <div class="form-container">
+                        <label for="nip">NIP</label>
+                        <input type="text" id="nip" name="nip" value="<?= htmlspecialchars($data['nip']); ?>">
+
+                        <label for="nama">Nama</label>
+                        <input type="text" id="nama" name="nama" value="<?= htmlspecialchars($data['nama']); ?>">
+
+                        <label for="alamat">Alamat</label>
+                        <input type="text" id="alamat" name="alamat" value="<?= htmlspecialchars($data['alamat']); ?>">
+
+                        <label for="jenis_kelamin">Jenis Kelamin</label>
+                        <select name="jenis_kelamin" id="jenis_kelamin">
+                            <option value="">--Pilih Jenis Kelamin--</option>
+                            <option value="laki-laki" <?php echo isset($data['jenis_kelamin']) && $data['jenis_kelamin'] == "laki-laki" ? 'selected' : ''; ?>>Laki-Laki</option>
+                            <option value="perempuan" <?php echo isset($data['jenis_kelamin']) && $data['jenis_kelamin'] == "perempuan" ? 'selected' : ''; ?>>Perempuan</option>
+                        </select>
+
+                        <label for="no_hp">No hp</label>
+                        <input type="text" id="no_hp" name="no_hp" value="<?= htmlspecialchars($data['no_hp']); ?>">
+
+                        <label for="lokasi_presensi"> Lokasi Absensi</label>
+                        <select name="lokasi_presensi" id="lokasi_presensi">
+                            <option value="">--Pilih Lokasi Absensi--</option>
+                            <?php
+
+                            $ambil_nama_lokasi = mysqli_query($connection, "SELECT * FROM lokasi_presensi ORDER BY nama_lokasi ASC");
+
+
+                            $lokasi_terpilih = isset($lokasi_terpilih) ? $lokasi_terpilih : '';
+
+
+                            while ($nama_lokasi = mysqli_fetch_assoc($ambil_nama_lokasi)) {
+                                $nama_nama_lokasi = $nama_lokasi['nama_lokasi'];
+
+
+                                if ($lokasi_terpilih == $nama_nama_lokasi) {
+                                    echo '<option value="' . $nama_nama_lokasi . '" selected="selected">' . $nama_nama_lokasi . '</option>';
+                                } else {
+                                    echo '<option value="' . $nama_nama_lokasi . '">' . $nama_nama_lokasi . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" value="<?= htmlspecialchars($data['username']); ?>">
+
+                        <label for="password">Password</label>
+                        <input type="text" id="password" name="password" value="<?= $data['password'] ?>">
+
+                        <label for="jabatan">Jabatan</label>
+                        <input type="text" id="jabatan" name="jabatan" value="<?= htmlspecialchars($data['jabatan']); ?>">
+
+                        <label for="role">Role</label>
+                        <select name="role" id="role">
+                            <option value="admin" <?= $data['role'] == 'admin' ? 'selected' : ''; ?>>Admin</option>
+                            <option value="pegawai" <?= $data['role'] == 'pegawai' ? 'selected' : ''; ?>>Pegawai</option>
+                        </select>
+
+                        <label for="status">Status</label>
+                        <select name="status" id="status">
+                            <option value="Aktif" <?= $data['status'] == 'Aktif' ? 'selected' : ''; ?>>Aktif</option>
+                            <option value="nonaktif" <?= $data['status'] == 'nonaktif' ? 'selected' : ''; ?>>Nonaktif</option>
+                        </select>
+
+                        <label for="foto">foto</label>
+                        <input type="file" id="foto" name="foto" value="<?= htmlspecialchars($data['foto']); ?>">
+
+                        <div class="button-container">
+                            <button type="submit" name="update">Update</button>
+                            <a href="pegawai.php" class="button">Back</a>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id" value="<?= $data['id_pegawai']; ?>">
+                </form>
+            </div>
+
+        </main>
+    </section>
+    <!-- CONTENT -->
+    <script src="<?= base_url('../../assets/java/script.js?v=' . filemtime(FCPATH . '../../assets/java/script.js')); ?>"></script>
     <?php include("../../assets/swetalert/swetalert.php"); ?>
 </body>
 
