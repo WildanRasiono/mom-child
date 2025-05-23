@@ -38,7 +38,6 @@ if ($zona_waktu == 'WIB') {
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
@@ -56,202 +55,179 @@ if ($zona_waktu == 'WIB') {
 			color: red;
 		}
 	</style>
-
-
-
 	<title>Absensi</title>
 </head>
 
 <body>
-
-
-	<!-- sidebar -->
-	<section id="sidebar"> <a href="#" class="brand">
-
-
-
-
-		</a>
-		<ul class="side-menu top">
-			<li class="active">
-				<a href="home.php">
-					<i class='bx bx-home-alt'></i>
-					<span class="text">Home</span>
-				</a>
-			</li>
-			<li>
-				<a href="../data_absensi/data_absensi.php">
-					<i class='bx bxs-user-detail'></i>
-					<span class="text">Rekap Absensi</span>
-				</a>
-			</li>
-
-			<ul class="side-menu">
-
-				<li>
-					<a href="../../login/logout.php" class="logout">
-						<i class='bx bxs-log-out-circle'></i>
-						<span class="text">logout</span>
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- sidebar -->
+		<section id="sidebar"> 
+			<a href="#" class="brand">
+				<img src="../../assets/momchild.png" alt="Mom & Child Logo" class="brand-img">
+			</a>
+			<ul class="side-menu top">
+				<li class="active">
+					<a href="home.php">
+						<i class='bx bx-home-alt'></i>
+						<span class="text">Home</span>
 					</a>
 				</li>
+				<li>
+					<a href="../data_absensi/data_absensi.php">
+						<i class='bx bxs-user-detail'></i>
+						<span class="text">Rekap Absensi</span>
+					</a>
+				</li>
+				<ul class="side-menu">
+					<li>
+						<a href="../../login/logout.php" class="logout">
+							<i class='bx bxs-log-out-circle'></i>
+							<span class="text">logout</span>
+						</a>
+					</li>
+				</ul>
 			</ul>
-
-
-
-	</section>
-	<!-- sidebar --><?php include("../layout/navbar.php"); ?>
-
-
-
-	<!-- MAIN -->
-	<main>
-		<div class="head-title">
-			<div class="left">
-				<h1>Absensi Karyawan</h1>
-
-			</div>
-
-		</div>
-
-		<div class="tesinput">
-			<div class="card-container" style="justify-content: center;">
-				<div class="card">
-					<div class="card-header">Masuk</div>
-					<div class="card-body">
-
-						<?php
-
-						$id_pegawai = $_SESSION['id'];
-						$tgl_masuk = date('Y-m-d');
-						$waktu = date('H:i:s');
-
-						$cek_masuk = mysqli_query($connection, "SELECT*FROM presensi WHERE id_pegawai = '$id_pegawai' AND tanggal_masuk = '$tgl_masuk'");
-
-						if (strtotime($waktu) <= strtotime($jam_masuk)) { ?>
-							<div style="justify-items: center;">
-								<i class='bx bx-x-circle bx-tada bx-lg icon-ex'></i>
-								<h4>Belum waktunya absen ya</h4>
-							</div>
-						<?php } else { ?>
-							<?php
-							if (mysqli_num_rows($cek_masuk) === 0) {;
-							?>
-								<div class="date">
-									<div id="tanggal_masuk"></div>
-									<div class="jarak"></div>
-									<div id="bulan_masuk"></div>
-									<div class="jarak"></div>
-									<div id="tahun_masuk"></div>
-
-								</div>
-								<div class="jam">
-									<div id="jam_masuk"></div>
-									<div>:</div>
-									<div id="menit_masuk"></div>
-									<div>:</div>
-									<div id="detik_masuk"></div>
-
-								</div>
-								<form method="POST" action="../presensi/presensi_masuk.php">
-									<div class="button-container">
-										<input type="hidden" id="latitude" name="latitude_pegawai">
-
-										<input type="hidden" id="longitude" name="longitude_pegawai">
-										<input type="hidden" value="<?= $latitude_kantor ?>" name="latitude_kantor">
-										<input type="hidden" value="<?= $longitude_kantor ?>" name="longitude_kantor">
-										<input type="hidden" value="<?= $radius ?>" name="radius">
-										<input type="hidden" value="<?= $zona_waktu ?>" name="zona_waktu">
-										<input type="hidden" value="<?= date('Y-m-d') ?>" name="tanggal_masuk">
-										<input type="hidden" value="<?= date('H:i:s') ?>" name="jam_masuk">
-										<button type="submit" name="masuk">Masuk</button>
-
-									</div>
-								</form>
-							<?php } else { ?>
-								<div style="justify-items: center;">
-									<i class='bx bx-check-circle bx-tada bx-lg icon-success'></i>
-									<h4>Anda sudah absen masuk untuk hari ini</h4>
-								</div>
-							<?php } ?>
-						<?php } ?>
-					</div>
+		</section>
+		<!-- sidebar -->
+		<!-- MAIN -->
+		<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>Absensi Karyawan</h1>
 				</div>
-				<div class="card">
-					<div class="card-header">keluar</div>
-					<div class="card-body">
-						<?php
-
-						$id_pegawai = $_SESSION['id'];
-						$tgl_keluar = date('Y-m-d');
-						$waktu = date('H:i:s');
-						$cek_masuk = mysqli_query($connection, "SELECT*FROM presensi WHERE id_pegawai = '$id_pegawai' AND tanggal_masuk = '$tgl_masuk'");
-						$cek_keluar = mysqli_query($connection, "SELECT*FROM presensi WHERE id_pegawai = '$id_pegawai' AND tanggal_keluar = '$tgl_keluar'");
-						if (mysqli_num_rows($cek_masuk) === 0) { ?>
-							<div style="justify-items: center;">
-								<i class='bx bx-x-circle bx-tada bx-lg icon-ex'></i>
-								<h4>Anda belum absen masuk!!</h4>
-							</div>
-						<?php } else { ?>
-							<?php if (strtotime($waktu) <= strtotime($jam_pulang)) { ?>
+			</div>
+			<div class="tesinput">
+				<div class="card-container" style="justify-content: center;">
+					<div class="card">
+						<div class="card-header">Masuk</div>
+						<div class="card-body">
+							<?php
+							$id_pegawai = $_SESSION['id'];
+							$tgl_masuk = date('Y-m-d');
+							$waktu = date('H:i:s');
+							$cek_masuk = mysqli_query($connection, "SELECT*FROM presensi WHERE id_pegawai = '$id_pegawai' AND tanggal_masuk = '$tgl_masuk'");
+							if (strtotime($waktu) <= strtotime($jam_masuk)) { ?>
 								<div style="justify-items: center;">
 									<i class='bx bx-x-circle bx-tada bx-lg icon-ex'></i>
-									<h4>Belum waktunya pulang</h4>
+									<h4>Belum waktunya absen ya</h4>
 								</div>
-
 							<?php } else { ?>
 								<?php
-								if (mysqli_num_rows($cek_keluar) === 0) {;
+								if (mysqli_num_rows($cek_masuk) === 0) {;
 								?>
 									<div class="date">
-										<div id="tanggal_keluar"></div>
+										<div id="tanggal_masuk"></div>
 										<div class="jarak"></div>
-										<div id="bulan_keluar"></div>
+										<div id="bulan_masuk"></div>
 										<div class="jarak"></div>
-										<div id="tahun_keluar"></div>
+										<div id="tahun_masuk"></div>
 
 									</div>
 									<div class="jam">
-										<div id="jam_keluar"></div>
+										<div id="jam_masuk"></div>
 										<div>:</div>
-										<div id="menit_keluar"></div>
+										<div id="menit_masuk"></div>
 										<div>:</div>
-										<div id="detik_keluar"></div>
+										<div id="detik_masuk"></div>
 
 									</div>
-									<form method="POST" action="../presensi/presensi_keluar.php">
+									<form method="POST" action="../presensi/presensi_masuk.php">
 										<div class="button-container">
 											<input type="hidden" id="latitude" name="latitude_pegawai">
+
 											<input type="hidden" id="longitude" name="longitude_pegawai">
 											<input type="hidden" value="<?= $latitude_kantor ?>" name="latitude_kantor">
 											<input type="hidden" value="<?= $longitude_kantor ?>" name="longitude_kantor">
 											<input type="hidden" value="<?= $radius ?>" name="radius">
 											<input type="hidden" value="<?= $zona_waktu ?>" name="zona_waktu">
-											<input type="hidden" value="<?= date('Y-m-d') ?>" name="tanggal_keluar">
-											<input type="hidden" value="<?= date('H:i:s') ?>" name="jam_keluar">
-											<button type="submit" name="keluar">Keluar</button>
+											<input type="hidden" value="<?= date('Y-m-d') ?>" name="tanggal_masuk">
+											<input type="hidden" value="<?= date('H:i:s') ?>" name="jam_masuk">
+											<button type="submit" name="masuk">Masuk</button>
+
 										</div>
 									</form>
 								<?php } else { ?>
 									<div style="justify-items: center;">
 										<i class='bx bx-check-circle bx-tada bx-lg icon-success'></i>
-										<h4>Sampai jumpa besok ya</h4>
+										<h4>Anda sudah absen masuk untuk hari ini</h4>
 									</div>
 								<?php } ?>
 							<?php } ?>
-						<?php } ?>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header">keluar</div>
+						<div class="card-body">
+							<?php
+
+							$id_pegawai = $_SESSION['id'];
+							$tgl_keluar = date('Y-m-d');
+							$waktu = date('H:i:s');
+							$cek_masuk = mysqli_query($connection, "SELECT*FROM presensi WHERE id_pegawai = '$id_pegawai' AND tanggal_masuk = '$tgl_masuk'");
+							$cek_keluar = mysqli_query($connection, "SELECT*FROM presensi WHERE id_pegawai = '$id_pegawai' AND tanggal_keluar = '$tgl_keluar'");
+							if (mysqli_num_rows($cek_masuk) === 0) { ?>
+								<div style="justify-items: center;">
+									<i class='bx bx-x-circle bx-tada bx-lg icon-ex'></i>
+									<h4>Anda belum absen masuk!!</h4>
+								</div>
+							<?php } else { ?>
+								<?php if (strtotime($waktu) <= strtotime($jam_pulang)) { ?>
+									<div style="justify-items: center;">
+										<i class='bx bx-x-circle bx-tada bx-lg icon-ex'></i>
+										<h4>Belum waktunya pulang</h4>
+									</div>
+
+								<?php } else { ?>
+									<?php
+									if (mysqli_num_rows($cek_keluar) === 0) {;
+									?>
+										<div class="date">
+											<div id="tanggal_keluar"></div>
+											<div class="jarak"></div>
+											<div id="bulan_keluar"></div>
+											<div class="jarak"></div>
+											<div id="tahun_keluar"></div>
+
+										</div>
+										<div class="jam">
+											<div id="jam_keluar"></div>
+											<div>:</div>
+											<div id="menit_keluar"></div>
+											<div>:</div>
+											<div id="detik_keluar"></div>
+
+										</div>
+										<form method="POST" action="../presensi/presensi_keluar.php">
+											<div class="button-container">
+												<input type="hidden" id="latitude" name="latitude_pegawai">
+												<input type="hidden" id="longitude" name="longitude_pegawai">
+												<input type="hidden" value="<?= $latitude_kantor ?>" name="latitude_kantor">
+												<input type="hidden" value="<?= $longitude_kantor ?>" name="longitude_kantor">
+												<input type="hidden" value="<?= $radius ?>" name="radius">
+												<input type="hidden" value="<?= $zona_waktu ?>" name="zona_waktu">
+												<input type="hidden" value="<?= date('Y-m-d') ?>" name="tanggal_keluar">
+												<input type="hidden" value="<?= date('H:i:s') ?>" name="jam_keluar">
+												<button type="submit" name="keluar">Keluar</button>
+											</div>
+										</form>
+									<?php } else { ?>
+										<div style="justify-items: center;">
+											<i class='bx bx-check-circle bx-tada bx-lg icon-success'></i>
+											<h4>Sampai jumpa besok ya</h4>
+										</div>
+									<?php } ?>
+								<?php } ?>
+							<?php } ?>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-
-	</main>
-	<!-- MAIN -->
+		</main>
+		<!-- MAIN -->
 	</section>
 	<!-- CONTENT -->
-
-
 	<script src="../../assets/java/script.js"></script>
-
 	<script>
 		//wktu masuk
 		function waktumasuk() {
@@ -279,16 +255,12 @@ if ($zona_waktu == 'WIB') {
 			document.getElementById("jam_masuk").textContent = formatNumber(jam_masuk);
 			document.getElementById("menit_masuk").textContent = formatNumber(menit_masuk);
 			document.getElementById("detik_masuk").textContent = formatNumber(detik_masuk);
-
-
 		}
 
 		// Jalankan fungsi setiap detik
 		setInterval(waktumasuk, 1000);
 
 		// Panggil sekali di awal agar langsung tampil tanpa menunggu satu detik pertama
-
-
 		function waktukeluar() {
 			const now = new Date();
 			const namaBulan = [
@@ -352,7 +324,6 @@ if ($zona_waktu == 'WIB') {
 			}
 		}
 	</script>
-
 	<?php include("../../assets/swetalert/swetalert.php"); ?>
 </body>
 

@@ -1,34 +1,32 @@
 <?php
-session_start();
+    session_start();
 
-if (!isset($_SESSION['login'])) {
-    header("Location: ../../login/login.php?pesan=belum_login");
-} else if ($_SESSION['role'] != "pegawai") {
-    header("Location: ../../login/login.php?pesan=akses_ditolak");
-}
+    if (!isset($_SESSION['login'])) {
+        header("Location: ../../login/login.php?pesan=belum_login");
+    } else if ($_SESSION['role'] != "pegawai") {
+        header("Location: ../../login/login.php?pesan=akses_ditolak");
+    }
 
-require_once("../../config.php");
+    require_once("../../config.php");
 
-if (isset($_POST['keluar'])) {
-    $latitude_pegawai = (float) $_POST['latitude_pegawai'];
-    $longitude_pegawai = (float) $_POST['longitude_pegawai'];
-    $latitude_kantor = (float) $_POST['latitude_kantor'];
-    $longitude_kantor = (float) $_POST['longitude_kantor'];
-    $radius = (float) $_POST['radius'];
-    $zona_waktu = $_POST['zona_waktu'];
-    $tanggal_keluar = $_POST['tanggal_keluar'];
-    $jam_keluar = $_POST['jam_keluar'];
-}
+    if (isset($_POST['keluar'])) {
+        $latitude_pegawai = (float) $_POST['latitude_pegawai'];
+        $longitude_pegawai = (float) $_POST['longitude_pegawai'];
+        $latitude_kantor = (float) $_POST['latitude_kantor'];
+        $longitude_kantor = (float) $_POST['longitude_kantor'];
+        $radius = (float) $_POST['radius'];
+        $zona_waktu = $_POST['zona_waktu'];
+        $tanggal_keluar = $_POST['tanggal_keluar'];
+        $jam_keluar = $_POST['jam_keluar'];
+    }
 
-$perbedaan_koordinat = $longitude_pegawai - $longitude_kantor;
-$jarak = sin(deg2rad($latitude_pegawai)) * sin(deg2rad($latitude_kantor)) + cos(deg2rad($latitude_pegawai)) * cos(deg2rad($latitude_kantor)) * cos(deg2rad($perbedaan_koordinat));
-$jarak = acos($jarak);
-$jarak = rad2deg($jarak);
-$mil = $jarak * 60 * 1.1515;
-$jarak_km = $mil * 1.609344;
-$jarak_meter = $jarak_km * 1000;
-
-
+    $perbedaan_koordinat = $longitude_pegawai - $longitude_kantor;
+    $jarak = sin(deg2rad($latitude_pegawai)) * sin(deg2rad($latitude_kantor)) + cos(deg2rad($latitude_pegawai)) * cos(deg2rad($latitude_kantor)) * cos(deg2rad($perbedaan_koordinat));
+    $jarak = acos($jarak);
+    $jarak = rad2deg($jarak);
+    $mil = $jarak * 60 * 1.1515;
+    $jarak_km = $mil * 1.609344;
+    $jarak_meter = $jarak_km * 1000;
 ?>
 
 <!DOCTYPE html>
@@ -52,16 +50,13 @@ $jarak_meter = $jarak_km * 1000;
             height: 300px;
         }
     </style>
-
 </head>
 
 <body>
     <!-- sidebar -->
-    <section id="sidebar"> <a href="#" class="brand">
-
-
-
-
+    <section id="sidebar"> 
+        <a href="#" class="brand">
+            <img src="../../assets/momchild.png" alt="Mom & Child Logo" class="brand-img">
         </a>
         <ul class="side-menu top">
             <li class="active">
@@ -78,7 +73,6 @@ $jarak_meter = $jarak_km * 1000;
             </li>
             <li>
                 <ul class="side-menu">
-
                     <li>
                         <a href="../../login/logout.php" class="logout">
                             <i class='bx bxs-log-out-circle'></i>
@@ -86,23 +80,21 @@ $jarak_meter = $jarak_km * 1000;
                         </a>
                     </li>
                 </ul>
+            </li>
+        </ul>
     </section>
     <!-- sidebar -->
-    <?php include("../layout/navbar.php"); ?>
-
     <main>
         <div class="head-title">
             <div class="left">
                 <h1>Absensi Karyawan</h1>
             </div>
         </div>
-
         <div class="tesinput">
             <div class="card-container" style="justify-content: center;">
                 <div class="card" style="margin: auto;">
                     <div>
                         <div id="map">
-
                         </div>
                     </div>
                 </div>
@@ -117,76 +109,69 @@ $jarak_meter = $jarak_km * 1000;
                         <div class="button-container">
                             <button type="submit" name="submit" id="ambil_foto">Keluar</button>
                         </div>
-
-
                     </div>
                 </div>
             </div>
         </div>
+    </main>
+    <script language="JavaScript">
+        Webcam.set({
+            width: 320,
+            height: 240,
+            dest_width: 320,
+            dest_height: 240,
+            image_format: 'jpeg',
+            jpeg_quality: 90,
+            force_flash: false
+        });
+        Webcam.attach('#my_camera');
 
-        <script language="JavaScript">
-            Webcam.set({
-                width: 320,
-                height: 240,
-                dest_width: 320,
-                dest_height: 240,
-                image_format: 'jpeg',
-                jpeg_quality: 90,
-                force_flash: false
+        document.getElementById('ambil_foto').addEventListener('click', function() {
+
+            let id = document.getElementById('id').value;
+            let tanggal_keluar = document.getElementById('tanggal_keluar').value;
+            let jam_keluar = document.getElementById('jam_keluar').value;
+
+            Webcam.snap(function(data_uri) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    document.getElementById('my_result').innerHTML = '<img src="' + data_uri + '"/>';
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        window.location.href = '../home/home.php';
+                    }
+                };
+                xhttp.open("POST", "presensi_keluar_aksi.php", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send(
+                    'foto=' + encodeURIComponent(data_uri) +
+                    '&id=' + id +
+                    '&tanggal_keluar=' + tanggal_keluar +
+                    '&jam_keluar=' + jam_keluar
+                );
+
             });
-            Webcam.attach('#my_camera');
-
-            document.getElementById('ambil_foto').addEventListener('click', function() {
-
-                let id = document.getElementById('id').value;
-                let tanggal_keluar = document.getElementById('tanggal_keluar').value;
-                let jam_keluar = document.getElementById('jam_keluar').value;
-
-                Webcam.snap(function(data_uri) {
-                    var xhttp = new XMLHttpRequest();
-                    xhttp.onreadystatechange = function() {
-                        document.getElementById('my_result').innerHTML = '<img src="' + data_uri + '"/>';
-                        if (xhttp.readyState == 4 && xhttp.status == 200) {
-                            window.location.href = '../home/home.php';
-                        }
-                    };
-                    xhttp.open("POST", "presensi_keluar_aksi.php", true);
-                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    xhttp.send(
-                        'foto=' + encodeURIComponent(data_uri) +
-                        '&id=' + id +
-                        '&tanggal_keluar=' + tanggal_keluar +
-                        '&jam_keluar=' + jam_keluar
-                    );
-
-                });
-            });
+        });
 
 
-            //map
-            let latitude_ktr = <?= $latitude_kantor ?>;
-            let longitude_ktr = <?= $longitude_kantor ?>;
-            let latitude_pgwi = <?= $latitude_pegawai ?>;
-            let longitude_pgwi = <?= $longitude_pegawai ?>;
-            var map = L.map('map').setView([latitude_ktr, longitude_ktr], 13);
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }).addTo(map);
-            var marker = L.marker([latitude_pgwi, longitude_pgwi]).addTo(map).bindPopup("Lokasi anda saat ini");
-            var circle = L.circle([latitude_ktr, longitude_ktr], {
-                color: 'red',
-                fillColor: '#f03',
-                fillOpacity: 0.5,
-                radius: 500
-            }).addTo(map).bindPopup("Kantor").openPopup();
-        </script>
-
-
-
-
-
-        <?php include("../../assets/swetalert/swetalert.php"); ?>
+        //map
+        let latitude_ktr = <?= $latitude_kantor ?>;
+        let longitude_ktr = <?= $longitude_kantor ?>;
+        let latitude_pgwi = <?= $latitude_pegawai ?>;
+        let longitude_pgwi = <?= $longitude_pegawai ?>;
+        var map = L.map('map').setView([latitude_ktr, longitude_ktr], 13);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        var marker = L.marker([latitude_pgwi, longitude_pgwi]).addTo(map).bindPopup("Lokasi anda saat ini");
+        var circle = L.circle([latitude_ktr, longitude_ktr], {
+            color: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+            radius: 500
+        }).addTo(map).bindPopup("Kantor").openPopup();
+    </script>
+    <?php include("../../assets/swetalert/swetalert.php"); ?>
 </body>
 
 </html>

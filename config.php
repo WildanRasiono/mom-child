@@ -9,10 +9,6 @@ if (!$connection) {
     echo "koneksi gagal"  . mysqli_connect_error();
 }
 
-
-
-
-
 function base_url($url = null)
 {
     $base_url = 'http://localhost/tugas';

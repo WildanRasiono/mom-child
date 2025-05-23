@@ -236,6 +236,7 @@ h1 {
   width: calc(100% - 60px);
   left: 60px;
 }
+/* SIDEBAR */
 
 /* NAVBAR */
 #content nav {
@@ -280,8 +281,8 @@ h1 {
   width: 100%;
   margin-right: auto;
 }
-
 /* NAVBAR */
+
 /* MAIN */
 #content main {
   width: 100%;
@@ -482,9 +483,9 @@ h1 {
 #content main .table-data .todo .todo-list {
   min-width: 420px;
 }
+/* MAIN */
 
-/*login*/
-
+/* LOGIN */
 .login-container {
   display: flex;
   justify-content: center;
@@ -608,9 +609,9 @@ h2 {
     width: 90%;
   }
 }
+/* LOGIN */
 
-/* Gaya untuk tabel */
-
+/* GAYA UNTUK TABEL */
 input[type="text"],
 input[type="number"],
 input[type="time"],
