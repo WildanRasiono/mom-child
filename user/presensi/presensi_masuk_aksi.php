@@ -40,13 +40,13 @@ $file = $username . '_masuk_' . date('Y-m-d') . '.png';
 file_put_contents($nama_file, $data);
 
 // Simpan data presensi ke database
-$result = mysqli_query($connection, "INSERT INTO presensi (id_pegawai, tanggal_masuk, jam_masuk, foto_masuk) VALUES ('$id_pegawai', '$tanggal_masuk', '$jam_masuk', '$file')");
+$result = mysqli_query($connection, "INSERT INTO presensi (id_pegawai, tanggal_masuk, jam_masuk, foto_masuk, tanggal_keluar, jam_keluar, foto_keluar) VALUES ('$id_pegawai', '$tanggal_masuk', '$jam_masuk', '$file', '', '', '')");
 
 if ($result) {
     $_SESSION['berhasil'] = "Presensi Masuk Berhasil";
     echo "success";
 } else {
-    $_SESSION['validasi'] = "Presensi Masuk Gagal";
+    $_SESSION['validasi'] = "Presensi Masuk Gagal". $id_pegawai. $tanggal_masuk. $jam_masuk. $file. $_SESSION['id']."";
     echo "error";
 }
 exit;

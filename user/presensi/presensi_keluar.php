@@ -53,67 +53,71 @@
 </head>
 
 <body>
-    <!-- sidebar -->
-    <section id="sidebar"> 
-        <a href="#" class="brand">
-            <img src="../../assets/momchild.png" alt="Mom & Child Logo" class="brand-img">
-        </a>
-        <ul class="side-menu top">
-            <li class="active">
-                <a href="../home/home.php">
-                    <i class='bx bx-home-alt'></i>
-                    <span class="text">Home</span>
-                </a>
-            </li>
-            <li>
-                <a href="../data_absensi/data_absensi.php">
-                    <i class='bx bxs-user-detail'></i>
-                    <span class="text">Rekap Absensi</span>
-                </a>
-            </li>
-            <li>
-                <ul class="side-menu">
-                    <li>
-                        <a href="../../login/logout.php" class="logout">
-                            <i class='bx bxs-log-out-circle'></i>
-                            <span class="text">logout</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+    <!-- CONTENT -->
+	<section id="content">
+        <!-- sidebar -->
+        <section id="sidebar"> 
+            <a href="#" class="brand">
+                <img src="../../assets/momchild.png" alt="Mom & Child Logo" class="brand-img">
+            </a>
+            <ul class="side-menu top">
+                <li class="active">
+                    <a href="../home/home.php">
+                        <i class='bx bx-home-alt'></i>
+                        <span class="text">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../data_absensi/data_absensi.php">
+                        <i class='bx bxs-user-detail'></i>
+                        <span class="text">Rekap Absensi</span>
+                    </a>
+                </li>
+                <li>
+                    <ul class="side-menu">
+                        <li>
+                            <a href="../../login/logout.php" class="logout">
+                                <i class='bx bxs-log-out-circle'></i>
+                                <span class="text">logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <!-- sidebar -->
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <h1>Absensi Karyawan</h1>
+                </div>
+            </div>
+            <div class="tesinput">
+                <div class="card-container" style="justify-content: center;">
+                    <div class="card" style="margin: auto;">
+                        <div>
+                            <div id="map">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" style="margin: auto;">
+                        <div>
+                            <input type="hidden" id="id" value="<?= $_SESSION['id'] ?>">
+                            <input type="hidden" id="tanggal_keluar" value="<?= $tanggal_keluar ?>">
+                            <input type="hidden" id="jam_keluar" value="<?= $jam_keluar ?>">
+                            <div id="my_camera"></div>
+                            <div id="my_result"></div>
+                            <div><?= date('d F Y', strtotime($tanggal_keluar)) . '-' . $jam_keluar ?></div>
+                            <div class="button-container">
+                                <button type="submit" name="submit" id="ambil_foto">Keluar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </section>
-    <!-- sidebar -->
-    <main>
-        <div class="head-title">
-            <div class="left">
-                <h1>Absensi Karyawan</h1>
-            </div>
-        </div>
-        <div class="tesinput">
-            <div class="card-container" style="justify-content: center;">
-                <div class="card" style="margin: auto;">
-                    <div>
-                        <div id="map">
-                        </div>
-                    </div>
-                </div>
-                <div class="card" style="margin: auto;">
-                    <div>
-                        <input type="hidden" id="id" value="<?= $_SESSION['id'] ?>">
-                        <input type="hidden" id="tanggal_keluar" value="<?= $tanggal_keluar ?>">
-                        <input type="hidden" id="jam_keluar" value="<?= $jam_keluar ?>">
-                        <div id="my_camera"></div>
-                        <div id="my_result"></div>
-                        <div><?= date('d F Y', strtotime($tanggal_keluar)) . '-' . $jam_keluar ?></div>
-                        <div class="button-container">
-                            <button type="submit" name="submit" id="ambil_foto">Keluar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+    <!-- CONTENT -->
     <script language="JavaScript">
         Webcam.set({
             width: 320,

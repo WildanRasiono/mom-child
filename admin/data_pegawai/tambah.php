@@ -117,9 +117,9 @@ if (isset($_POST['submit'])) {
                 $nip_db = $row['nip'];
                 $nip_db = explode("-", $nip_db);
                 $no_baru = (int)$nip_db[1] + 1;
-                $nip_baru = "TELKOM-" . str_pad($no_baru, 3, 0, STR_PAD_LEFT);
+                $nip_baru = "MAC-" . str_pad($no_baru, 3, 0, STR_PAD_LEFT);
             } else {
-                $nip_baru = "TEKLOM-001";
+                $nip_baru = "MAC-001";
             }
             ?>
             <div class="tesinput">

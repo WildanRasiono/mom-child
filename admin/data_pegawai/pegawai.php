@@ -104,7 +104,6 @@ $result = mysqli_query($connection, "SELECT user.id_pegawai, user.username, user
                                     <?php $no = 1; ?>
                                     <?php while ($pegawai = mysqli_fetch_array($result)) : ?>
                                         <tr>
-
                                             <td class="text-center"><?= $no++ ?></td>
                                             <td><?= $pegawai['nip'] ?></td>
                                             <td><?= $pegawai['nama'] ?></td>
